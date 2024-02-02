@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    {% block css %} {% endblock %}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/afca038480.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+        <h2>WebLib</h2>
+      </div>
+      <ul class="links">
+        <h4>Main Menu</h4>
+        <li>
+          <span class="material-symbols-outlined">dashboard</span>
+          <a href="{% url 'dashboard' %}">Все курсы</a>
+        </li>
+        {% if request.user.is_creator %}
+        <h4>Репетитор</h4>
+        <li>
+          <span class="material-symbols-outlined">bar_chart</span>
+          <a href="{% url 'create' %}">Создать Курс</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">ambient_screen</span>
+          <a href="{% url 'my_courses' %}">Мои курсы</a>
+        </li>
+        {% endif %}
+        <li>
+          <span class="material-symbols-outlined">school</span>
+          <a href="{% url 'enrolled' %}">Записи</a>
+        </li>
+        <li>
+          <span class="material-symbols-outlined">bookmark</span>
+          <a href="{% url 'favorite' %}">Избранное</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        {% if request.user.is_creator %}
+        {% else %}
+        <li>
+          <span class="material-symbols-outlined">settings</span>
+          <a href="{% url 'creator' %}">Стать создателем</a>
+        </li>
+        {% endif %}
+        
+        <li class="logout-link">
+          <span class="material-symbols-outlined">logout</span>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" style="all:unset">
+                <a>Logout</a>
+            </button>
+          </form>
+        </li>
+        {% else %}
+        <li class="logout-link">
+            <span class="material-symbols-outlined">login</span>
+            <a href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </aside>
+    <div class="content">{% block content %} {% endblock %}</div>
+  </body>
+</html>

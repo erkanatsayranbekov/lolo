@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href="{% static 'css/course.css' %}"> {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="course">
+            <div class="left">
+                <img src="{{ course.cover.url }}" alt="Cover">
+            </div>
+            <div class="right">
+                <div class="title">
+                    <h1>{{ course.name }}</h1> 
+                    {% if request.user == course.author %}
+                    <div class="buttons">
+                        <a href="{% url 'update_course' course.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <form action="{% url 'delete_course' course.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="all:unset; color: white;"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+                <h4>By {{ course.author }}</h4>
+                <h5 class="tag">{{ course.category }}</h5>
+                <p>{{ course.description }}</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <span class="star-rating" >
+                      <label for="rate-1" style="--i:1"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="rate" id="rate-1" value="1">
+                      <label for="rate-2" style="--i:2"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="rate" id="rate-2" value="2" checked>
+                      <label for="rate-3" style="--i:3"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="rate" id="rate-3" value="3">
+                      <label for="rate-4" style="--i:4"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="rate" id="rate-4" value="4">
+                      <label for="rate-5" style="--i:5"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="rate" id="rate-5" value="5">
+                      {% if rating %}
+                      <p>({{rating}})</p>
+                      {% else %}
+                      <p>(0)</p>
+                      {% endif %}
+                      <button type="submit" class="card-tag" style="color: white; border: none;">Оценить</button>
+                    </span>
+                  </form>
+                {% if not status %}
+                <form action="{% url 'enroll' course.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="create_post">Enroll</button>
+                </form>
+                {%endif%}
+            </div>
+        </div>
+        {% if status %}
+        <div class="lessons">
+            
+            {% for lesson in course.get_lessons.all %}
+            <div class="lesson">
+                <button type="button" class="collapsible" ><h3>{{ forloop.counter }}) {{ lesson.title }}</h3></button>
+
+                <div class="collapsible-content">
+                    <iframe width="70%" src="{{ lesson.video_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <div class="description">
+                        <h3>Description</h3>
+                        <p>{{ lesson.description }}</p>
+                        {% if request.user == course.author %}
+                        <div class="buttons">
+                            <a href="{% url 'update_lesson' course.id lesson.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="{% url 'delete_lesson' lesson.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" style="all:unset; color: white;"><i class="fa-solid fa-trash"></i> </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "flex") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "flex";
+            }
+        });
+        }
+    </script>
+{% endblock %}

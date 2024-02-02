@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Signup- BrosKing</title>
+    <script
+      src="https://kit.fontawesome.com/afca038480.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <img src="{% static 'img/wave.svg' %}" alt="" class="wave" />
+    <div class="container">
+      <div class="login-container">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="avatar_container">
+            {{form.image}}
+            <div id="preview" aria-labelledby="image" aria-describedby="image">
+              <i class="fa-solid fa-camera"></i>
+              <div id="avatar"></div>
+            </div>
+          </div>
+          <h3>Добро пожаловать!</h3>
+          {% for field, errors in form.errors.items %} {% for error in errors %}
+          <p style="color: red">{{ field }} {{ error }}</p>
+          {% endfor %} {% endfor %}
+          <div class="input_container">
+            <div class="left">
+              <div class="input-div one">
+                <div class="i">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div>{{ form.first_name }}</div>
+              </div>
+              <div class="input-div one">
+                <div class="i">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div>{{ form.last_name }}</div>
+              </div>
+              <div class="input-div one">
+                <div class="i">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>{{ form.username }}</div>
+              </div>
+              <div class="input-div one">
+                <div class="i">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>{{ form.email }}</div>
+              </div>
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fa-solid fa-venus-mars"></i>
+                </div>
+                <div>{{ form.gender }}</div>
+              </div>
+            </div>
+            <div class="right">
+                
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>{{ form.phone }}</div>
+              </div>
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div>{{ form.birth_date }}</div>
+              </div>
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>{{ form.experience }}</div>
+              </div>
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fas fa-lock"></i>
+                </div>
+                <div>{{ form.password1 }}</div>
+              </div>
+
+              <div class="input-div two">
+                <div class="i">
+                  <i class="fas fa-lock"></i>
+                </div>
+                <div>{{ form.password2 }}</div>
+              </div>
+            </div>
+          </div>
+
+          <a href="{% url 'login' %}">Уже зарегистрированы? Войти</a>
+          <input type="submit" class="btn" value="Регистрация" />
+        </form>
+      </div>
+      <div class="img">
+        <img src="{% static 'img/login.svg' %}" alt="" />
+      </div>
+    </div>
+    <script
+      src="{% static 'js/javascript.js' %}"
+      type="text/javascript"
+    ></script>
+    <script>
+      const UPLOAD_BUTTON = document.getElementById("avatar");
+      const FILE_INPUT = document.querySelector("input[type=file]");
+      const AVATAR = document.getElementById("avatar");
+
+      UPLOAD_BUTTON.addEventListener("click", () => FILE_INPUT.click());
+
+      FILE_INPUT.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+          AVATAR.setAttribute("aria-label", file.name);
+          AVATAR.style.background = `url(${reader.result}) center center/cover`;
+        };
+      });
+    </script>
+  </body>
+</html>

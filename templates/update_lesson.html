@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href="{% static 'css/create_lesson.css' %}">  {% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="create">
+          {% for field, errors in form.errors.items %} {% for error in errors %}
+          <p style="color: red">{{ field }} {{ error }}</p>
+          {% endfor %} {% endfor %}
+            <h1>Редактировать Урок </h1>
+            {{ form.title }}
+            {{ form.description  }}
+            {{ form.video_link }}
+            <button type="submit" class="create_post" name="save">Сохранить</button>
+        </div>
+    </form>
+{% endblock %}

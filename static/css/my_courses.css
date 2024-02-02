@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  transition: all .5s ease-in-out;
+  height: 100vh;
+  align-items: center;
+}
+
+.card {
+  height: 500px;
+  aspect-ratio: 3/4;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  color: white;
+  transition: all .5s ease-in-out;
+  background-color: rgb(0, 208, 208);
+  -webkit-box-shadow: 25px 30px 74px -23px rgba(0,0,0,0.7);
+  -moz-box-shadow: 25px 30px 74px -23px rgba(0,0,0,0.7);
+  box-shadow: 25px 30px 74px -23px rgba(0,0,0,0.7);
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  height: 50%;
+  z-index: 10;
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+.author{
+  position: absolute;
+  z-index: 11;
+  bottom: 45%;
+  width: 50px;
+  height: 50px;
+  right: 5%;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.tag{
+  padding: 5px 10px;
+  background-color: rgb(255,255,255,0.5);
+  width: fit-content;
+  border-radius: 20px;
+}
+
+.cover{
+  height: 100%;
+}
+
+.fa-star { 
+  color: gold;
+}
+
+.description{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.like {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 1450px) {
+  .card {
+    height: 400px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .course-name {
+    font-size: 20px;
+  }
+  .price {
+    font-size: 10px;
+  }
+  .lessons {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+}

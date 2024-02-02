@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href="{% static 'css/my_courses.css' %}"> {% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% for course in courses %}
+      <div class="card">
+        <img src="{{ course.cover.url}}" alt="img" class="cover">
+        <img src="{% if course.author.image %}  {{course.author.image.url}} {% else %} {% static 'img/author.png' %} {% endif %}"
+        alt="author" class="author">
+        <div class="like absolute">
+          <a href="{% url 'like' course.id %}"> 
+            {{ course.liked_by.count }}
+              {% if request.user in course.liked_by.all %} 
+              <i class="fa-solid fa-heart" style="color: red;"></i>
+            {% else %} 
+              <i class="fa-regular fa-heart"></i> 
+            {% endif %} </a>
+        </div>
+        <div class="card-content">
+            <div class="tag">
+                <p>{{ course.category }}</p>
+            </div>
+            <h1 class="course-name">
+              <a href="{% url 'course' course.id %}" class="card-title hover:underline">
+              {{ course.name }}
+            </a></h1>
+            <div class="reviews">
+                4.0 (75 Reviews)
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
+            <div class="description">
+              <div class="lessons">
+                  <i class="fa-solid fa-book-open"></i>
+                  {{ course.get_lessons.count }} Lessons
+              </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

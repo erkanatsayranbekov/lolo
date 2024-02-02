@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href="{% static 'css/create_course.css' %}">  {% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="create">
+            <h1>Редактировать Курс</h1>
+            {{ form.name }}
+            {{ form.description }}
+            {{ form.price }}
+            {{ form.start_date }}
+            {{ form.end_date }}
+            <button type="submit" class="create_post">Cохранить</button>
+        </div>
+        <div class="avatar_container">
+            {{form.cover}}
+            <div id="preview" aria-labelledby="image" aria-describedby="image">
+                <div id="avatar"><i class="fa-solid fa-upload" id="icon"></i></div>
+            </div>
+        </div>
+    </form>
+    <script>
+        const UPLOAD_BUTTON = document.getElementById("avatar");
+        const FILE_INPUT = document.querySelector("input[type=file]");
+        const AVATAR = document.getElementById("avatar");
+        const ICON = document.getElementById("icon");
+  
+        UPLOAD_BUTTON.addEventListener("click", () => FILE_INPUT.click());
+  
+        FILE_INPUT.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+            ICON.remove();
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+  
+          reader.onloadend = () => {
+            AVATAR.setAttribute("aria-label", file.name);
+            AVATAR.style.background = `url(${reader.result}) center center/cover`;
+          };
+
+          
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+        const courseImageUrl = "{{ course.cover.url }}";
+        if (courseImageUrl) {
+            const avatar = document.getElementById("avatar");
+            avatar.style.background = `url(${courseImageUrl}) center center/cover`;
+            avatar.setAttribute("aria-label", "Current avatar");
+        }
+    })
+
+        
+      </script>
+{% endblock %}
