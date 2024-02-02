@@ -60,7 +60,7 @@ form h2{
     bottom: -2px;
     width: 50%;
     height: 2px;
-    background-color: #5025ca;
+    background-color: #53d1ff;
     transition: 0.3s;
 }
 .input-div:after{
@@ -70,7 +70,7 @@ form h2{
     left: 50%;
 }
 .input-div.focus .i i{
-    color: #5025ca;
+    color: #53d1ff;
 }
 .input-div.focus div h5{
     top: -5px;
@@ -135,7 +135,7 @@ a{
     transition: 0.3s;
 }
 a:hover{
-    color: #5025ca;
+    color: #53d1ff;
 }
 .btn{
     display: block;
@@ -151,7 +151,7 @@ a:hover{
     text-transform: uppercase;
     font-family: 'Poppins', sans-serif;
     background-size: 200%;
-    background-image: linear-gradient(to right, #5025ca, #5045ca, #5070ca);
+    background-image: linear-gradient(to right, #53d1ff, #fff);
     transition: 0.5s;
 }
 .btn:hover{

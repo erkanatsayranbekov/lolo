@@ -28,17 +28,19 @@
               {{ course.name }}
             </a></h1>
             <div class="reviews">
-                4.0 (75 Reviews)
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
+                {{ course.average_rating }} ({{ course.gget_number_of_votes }} Reviews)
+                {% if course.average_rating >= 1 %}<i class="fa-solid fa-star"></i>{% else %}<i class="fa-regular fa-star"></i>{% endif %}
+                {% if course.average_rating >= 2 %}<i class="fa-solid fa-star"></i>{% else %}<i class="fa-regular fa-star"></i>{% endif %}
+                {% if course.average_rating >= 3 %}<i class="fa-solid fa-star"></i>{% else %}<i class="fa-regular fa-star"></i>{% endif %}
+                {% if course.average_rating >= 4 %}<i class="fa-solid fa-star"></i>{% else %}<i class="fa-regular fa-star"></i>{% endif %}
+                {% if course.average_rating == 5 %}<i class="fa-solid fa-star"></i>{% else %}<i class="fa-regular fa-star"></i>{% endif %}
             </div>
             <div class="description">
                 <div class="lessons">
                     <i class="fa-solid fa-book-open"></i>
-                    {{ course.get_lessons.count }} Lessons
+                    {{ course.get_lessons.count }}
+                    {% if course.get_lessons.count == 1  %} Урок {% endif %}
+                    {% if course.get_lessons.count > 1 and  course.get_lessons.count <= 4 %} Урокa {% endif %}
                 </div>
             </div>
         </div>

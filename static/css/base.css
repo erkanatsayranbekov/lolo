@@ -8,24 +8,7 @@
 }
 
 body {
-  height: fit-content;
-  background-repeat: no-repeat;
-  background: linear-gradient(
-    to right top,
-    #6386ff,
-    #00a4ff,
-    #00bdff,
-    #00d4ff,
-    #1ee7ff,
-    #63effe,
-    #89f7fe,
-    #a9feff,
-    #c3fdff,
-    #dffbff,
-    #f5fbff,
-    #ffffff
-  );
-  background-size: cover;
+  background-color: #53d1ff;
 }
 
 .sidebar {

@@ -28,16 +28,17 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <span class="star-rating" >
-                      <label for="rate-1" style="--i:1"><i class="fa-solid fa-star"></i></label>
+                      <label for="rate-1" style="--i:1; {% if rating and rating >= 1 %}color: gold;{% endif %}"><i class="fa-solid fa-star"></i></label>
                       <input type="radio" name="rate" id="rate-1" value="1">
-                      <label for="rate-2" style="--i:2"><i class="fa-solid fa-star"></i></label>
+                      <label for="rate-2" style="--i:2; {% if rating and rating >= 2 %}color: gold;{% endif %}"><i class="fa-solid fa-star"></i></label>
                       <input type="radio" name="rate" id="rate-2" value="2" checked>
-                      <label for="rate-3" style="--i:3"><i class="fa-solid fa-star"></i></label>
+                      <label for="rate-3" style="--i:3; {% if rating and rating >= 3 %}color: gold;{% endif %}"><i class="fa-solid fa-star"></i></label>
                       <input type="radio" name="rate" id="rate-3" value="3">
-                      <label for="rate-4" style="--i:4"><i class="fa-solid fa-star"></i></label>
+                      <label for="rate-4" style="--i:4; {% if rating and rating >= 4 %}color: gold;{% endif %}"><i class="fa-solid fa-star"></i></label>
                       <input type="radio" name="rate" id="rate-4" value="4">
-                      <label for="rate-5" style="--i:5"><i class="fa-solid fa-star"></i></label>
+                      <label for="rate-5" style="--i:5; {% if rating and rating == 5 %}color: gold;{% endif %}"><i class="fa-solid fa-star"></i></label>
                       <input type="radio" name="rate" id="rate-5" value="5">
+
                       {% if rating %}
                       <p>({{rating}})</p>
                       {% else %}

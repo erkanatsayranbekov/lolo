@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.db.models import Avg
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = (
@@ -45,9 +46,27 @@ class Course(models.Model):
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
         
+    def average_rating(self):
+        avg_rating = Rate.objects.filter(course=self).aggregate(Avg('rate'))['rate__avg']
+        return round(avg_rating, 2) if avg_rating is not None else 0.0
+    
+    def get_number_of_votes(self):
+        return Rate.objects.filter(course=self).count()
+            
     def __str__(self):
         return f'{self.name} ({self.author.first_name} {self.author.last_name})' 
 
+class Rate(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    rate = models.IntegerField(validators=[MaxValueValidator(5)])
+    
+    def __str__(self):
+        return self.rate
+    
+    class Meta:
+        verbose_name = "Оценка"
+        verbose_name_plural = "Оценки"
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -75,14 +94,3 @@ class Enrollment(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name} ({self.course.name})'
     
-class Rate(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    rate = models.IntegerField(validators=[MaxValueValidator(5)])
-    
-    def __str__(self):
-        return self.rate
-    
-    class Meta:
-        verbose_name = "Оценка"
-        verbose_name_plural = "Оценки"

@@ -68,7 +68,7 @@ a {
   transition: 0.3s;
 }
 a:hover {
-  color: #5025ca;
+  color: #53d1ff;
 }
 .btn {
   display: block;
@@ -84,7 +84,7 @@ a:hover {
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
   background-size: 200%;
-  background-image: linear-gradient(to right, #5025ca, #5045ca, #5070ca);
+  background-image: linear-gradient(to right, #53d1ff, #ffff);
   transition: 0.5s;
   box-shadow: 0px 2px 18px #343434;
 }
